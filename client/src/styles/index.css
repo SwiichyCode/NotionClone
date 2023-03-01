@@ -1,0 +1,11 @@
+@import "typography.css";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .height-container {
+    height: calc(100vh - 4rem);
+  }
+}
