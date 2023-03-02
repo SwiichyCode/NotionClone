@@ -7,8 +7,6 @@ var jwt = require("jsonwebtoken");
 var bcrypt = require("bcryptjs");
 
 exports.signup = (req, res) => {
-  console.log(req.body);
-
   const user = new User({
     username: req.body.username,
     email: req.body.email,
@@ -100,6 +98,7 @@ exports.signin = (req, res) => {
       for (let i = 0; i < user.roles.length; i++) {
         authorities.push("ROLE_" + user.roles[i].name.toUpperCase());
       }
+
       res.status(200).send({
         id: user._id,
         username: user.username,

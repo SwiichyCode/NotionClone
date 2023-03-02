@@ -20,8 +20,6 @@ exports.moderatorBoard = (req, res) => {
 };
 
 exports.updateUser = (req, res) => {
-  // const id = req.params._id;
-
   User.findById("63fbe2e92fab1eef20ca5f70", (err, user) => {
     if (err) {
       res.status(500).send({ message: err });
