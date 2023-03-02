@@ -30,6 +30,23 @@ exports.getBoards = (req, res) => {
   });
 };
 
+exports.updateBoard = (req, res) => {
+  Board.findOneAndUpdate(
+    { id: req.body.id },
+    {
+      name: req.body.name,
+      emoji: req.body.emoji,
+    },
+    (err, board) => {
+      if (err) {
+        res.status(500).send({ message: err });
+        return;
+      }
+      res.send({ message: "Board was updated successfully!" });
+    }
+  );
+};
+
 exports.deleteBoard = (req, res) => {
   Board.findOneAndDelete({ id: req.params.id }, (err, board) => {
     if (err) {

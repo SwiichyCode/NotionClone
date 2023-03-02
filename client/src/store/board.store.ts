@@ -16,6 +16,7 @@ type BoardStore = {
   fetch: () => Promise<void>;
   create: (data: Board) => Promise<void>;
   delete: (id: string) => Promise<void>;
+  update: (data: Board) => Promise<void>;
 };
 
 export const useBoardStore = create<BoardStore>()(
@@ -41,6 +42,29 @@ export const useBoardStore = create<BoardStore>()(
 
         try {
           await BoardService.addBoard(data).then((res) => {
+            if (res) {
+              BoardService.getBoards().then((res) => {
+                if (res) {
+                  set(() => ({ data: res.data, loading: false }));
+                } else {
+                  set(() => ({
+                    hasErrors: true,
+                    loading: false,
+                  }));
+                }
+              });
+            }
+          });
+        } catch (error) {
+          set(() => ({ hasErrors: true, loading: false }));
+        }
+      },
+
+      update: async (data: any) => {
+        set(() => ({ loading: true }));
+
+        try {
+          await BoardService.updateBoard(data).then((res) => {
             if (res) {
               BoardService.getBoards().then((res) => {
                 if (res) {

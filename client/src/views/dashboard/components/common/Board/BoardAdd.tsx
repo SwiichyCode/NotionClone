@@ -1,6 +1,7 @@
 import { useBoardStore } from "@/store/board.store.js";
 import { v4 as uuidv4 } from "uuid";
 import { IoMdAdd } from "react-icons/io";
+import { AsideButton } from "../Aside/AsideButton";
 
 export const BoardAdd = () => {
   const addBoard = useBoardStore((state) => state.create);
@@ -20,14 +21,11 @@ export const BoardAdd = () => {
   };
 
   return (
-    <button
+    <AsideButton
+      as={"button"}
       onClick={() => handleAddBoard()}
-      className="flex items-center gap-2 pl-4 cursor-pointer text-xs py-2 hover:bg-gray-100 "
-    >
-      <div className="flex items-center justify-center w-[22px] h-[22px] text-slate-500">
-        <IoMdAdd />
-      </div>
-      <span className=" font-light text-sm">Ajouter une page</span>
-    </button>
+      icon={<IoMdAdd />}
+      text="Ajouter une page"
+    />
   );
 };

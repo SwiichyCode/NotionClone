@@ -1,11 +1,8 @@
 import { useState } from "react";
-import { userState } from "@/views/dashboard/Dashboard";
 import { useUser } from "@/views/dashboard/hooks/useUser";
 import { AsideModalParams } from "./AsideModalParams";
 
-interface AsideParamsProps {
-  user: userState;
-}
+interface AsideParamsProps {}
 
 export const AsideProfil = ({}: AsideParamsProps) => {
   const [open, setOpen] = useState<boolean>(false);

@@ -1,9 +1,10 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, useRef } from "react";
 import { useDebounce } from "react-use";
 import { EmojisList } from "./EmojisList";
 import { EmojisSearchBar } from "./EmojisSearchBar";
 import { Spinner } from "../Spinner";
 import api from "@/api/api";
+import { useClickOutside } from "@/views/dashboard/hooks/useClickOutside";
 
 export interface EmojiState {
   slug: string;
@@ -14,14 +15,31 @@ export interface EmojiState {
   codePoint: string;
 }
 
-export const EmojisPicker = () => {
-  const [open, setOpen] = useState<boolean>(false);
+interface EmojisPickerProps {
+  openEmojiPicker: boolean;
+  setOpenEmojiPicker: (value: boolean) => void;
+  emojiSelected: EmojiState;
+  setEmojiSelected: (value: EmojiState) => void;
+  position: {
+    x: number;
+    y: number;
+  };
+  handleEditEmoji: any;
+}
+
+export const EmojisPicker = ({
+  openEmojiPicker,
+  setOpenEmojiPicker,
+  emojiSelected,
+  setEmojiSelected,
+  position,
+}: EmojisPickerProps) => {
   const [emojis, setEmojis] = useState<EmojiState[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [filteredEmojis, setFilteredEmojis] = useState<EmojiState[]>([]);
-  const [emojiSelected, setEmojiSelected] = useState<EmojiState>(
-    {} as EmojiState
-  );
+
+  const ref = useRef<HTMLDivElement>(null);
+  useClickOutside(ref, () => setOpenEmojiPicker(false));
 
   const handleUrl = useCallback(() => {
     if (filteredEmojis.length > 0) {
@@ -46,14 +64,21 @@ export const EmojisPicker = () => {
 
   return (
     <>
-      {open && (
-        <div className="w-full max-w-[408px] h-[356px] flex flex-col bg-white rounded-md drop-shadow-2xl">
+      {openEmojiPicker && (
+        <div
+          ref={ref}
+          className={`absolute w-[408px] h-[356px] flex flex-col bg-white rounded-md drop-shadow-2xl`}
+          style={{
+            left: position.x,
+            top: position.y + 32,
+          }}
+        >
           <div className="flex justify-between items-center px-4 my-4">
             <EmojisSearchBar setFilteredEmojis={setFilteredEmojis as any} />
             <span>{emojiSelected.character}</span>
             <button
               className="text-sm opacity-75"
-              onClick={() => setOpen(!open)}
+              onClick={() => setOpenEmojiPicker(!openEmojiPicker)}
             >
               Supprimer
             </button>

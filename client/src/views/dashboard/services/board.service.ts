@@ -21,6 +21,10 @@ const addBoard = async (data: Board) => {
   return await axios.post(API_URL + "add", data);
 };
 
+const updateBoard = async (data: Board) => {
+  return await axios.put(API_URL + "update/" + data.id, data);
+};
+
 const deleteBoard = (id: string) => {
   return axios.delete(API_URL + "delete/" + id, { headers: authHeader() });
 };
@@ -28,6 +32,7 @@ const deleteBoard = (id: string) => {
 const BoardService = {
   getBoards,
   addBoard,
+  updateBoard,
   deleteBoard,
 };
 

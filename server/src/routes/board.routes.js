@@ -8,7 +8,9 @@ module.exports = function (app) {
     );
     next();
   });
+
   app.get("/api/dashboard/all/:_id", controller.getBoards);
   app.post("/api/dashboard/add", controller.addBoard);
+  app.put("/api/dashboard/update/:id", controller.updateBoard);
   app.delete("/api/dashboard/delete/:id", controller.deleteBoard);
 };
