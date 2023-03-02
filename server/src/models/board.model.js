@@ -5,6 +5,7 @@ const Board = mongoose.model(
   new mongoose.Schema({
     id: String,
     name: String,
+    emoji: String,
     owner: String,
   })
 );

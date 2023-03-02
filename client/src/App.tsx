@@ -3,8 +3,8 @@ import { Signin } from "./views/auth/Signin";
 import { AppLayout } from "./layouts/AppLayout";
 import { AuthLayout } from "./views/auth/components/layout/AuthLayout";
 import { Signup } from "./views/auth/Signup";
-import { DashboardLayout } from "./views/board/components/layout/DashboardLayout";
-import { Dashboard } from "./views/board/Dashboard";
+import { DashboardLayout } from "./views/dashboard/components/layout/DashboardLayout";
+import { Dashboard } from "./views/dashboard/Dashboard";
 
 export const App = () => {
   return (
@@ -19,6 +19,7 @@ export const App = () => {
 
           <Route element={<DashboardLayout />}>
             <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/dashboard/:id" element={<Dashboard />} />
           </Route>
         </Routes>
       </BrowserRouter>

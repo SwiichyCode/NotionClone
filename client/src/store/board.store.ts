@@ -1,10 +1,26 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
-import BoardService from "../services/board.service";
+import BoardService from "../views/dashboard/services/board.service";
 
-export const useBoardStore = create(
+type Board = {
+  id?: string;
+  name?: string;
+  emoji?: string;
+  owner?: string;
+};
+
+type BoardStore = {
+  data: Board[];
+  loading: boolean;
+  hasErrors: boolean;
+  fetch: () => Promise<void>;
+  create: (data: Board) => Promise<void>;
+  delete: (id: string) => Promise<void>;
+};
+
+export const useBoardStore = create<BoardStore>()(
   persist(
-    (set, get) => ({
+    (set: any, get) => ({
       data: [],
       loading: false,
       hasErrors: false,
@@ -20,11 +36,11 @@ export const useBoardStore = create(
         }
       },
 
-      create: async (data) => {
+      create: async (data: any) => {
         set(() => ({ loading: true }));
 
         try {
-          await BoardService.addBoard(data.id, data.name).then((res) => {
+          await BoardService.addBoard(data).then((res) => {
             if (res) {
               BoardService.getBoards().then((res) => {
                 if (res) {
@@ -43,13 +59,13 @@ export const useBoardStore = create(
         }
       },
 
-      delete: async (id) => {
+      delete: async (id: any) => {
         set(() => ({ loading: true }));
 
         try {
           await BoardService.deleteBoard(id);
           set(() => ({
-            data: get().data.filter((board) => board.id !== id),
+            data: get().data.filter((board: any) => board.id !== id),
             loading: false,
           }));
         } catch (error) {

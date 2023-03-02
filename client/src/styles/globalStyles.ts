@@ -7,10 +7,6 @@ export const GlobalStyle = createGlobalStyle`
     box-sizing: border-box;
 }
 
-body {
-    font-size: 1.6rem;
-    
-}
 body,
 button,
 input,

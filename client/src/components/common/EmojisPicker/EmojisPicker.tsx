@@ -15,7 +15,7 @@ export interface EmojiState {
 }
 
 export const EmojisPicker = () => {
-  const [open, setOpen] = useState<boolean>(true);
+  const [open, setOpen] = useState<boolean>(false);
   const [emojis, setEmojis] = useState<EmojiState[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [filteredEmojis, setFilteredEmojis] = useState<EmojiState[]>([]);
@@ -51,7 +51,10 @@ export const EmojisPicker = () => {
           <div className="flex justify-between items-center px-4 my-4">
             <EmojisSearchBar setFilteredEmojis={setFilteredEmojis as any} />
             <span>{emojiSelected.character}</span>
-            <button className="text-sm" onClick={() => setOpen(!open)}>
+            <button
+              className="text-sm opacity-75"
+              onClick={() => setOpen(!open)}
+            >
               Supprimer
             </button>
           </div>

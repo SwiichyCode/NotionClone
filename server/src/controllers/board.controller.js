@@ -5,6 +5,7 @@ exports.addBoard = (req, res) => {
   const board = new Board({
     id: req.body.id,
     name: req.body.name,
+    emoji: req.body.emoji,
     owner: req.body.owner,
   });
 

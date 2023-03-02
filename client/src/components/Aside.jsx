@@ -3,11 +3,6 @@ import { AddBoardForm } from "./AddBoardForm";
 import { useBoardStore } from "../store/board.store";
 import styled from "styled-components";
 
-// interface Board {
-//   id: string;
-//   name: string;
-// }
-
 export const Aside = () => {
   const boards = useBoardStore((state) => state.data);
   const fetchBoards = useBoardStore((state) => state.fetch);

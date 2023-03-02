@@ -1,5 +1,5 @@
 import { Outlet } from "react-router-dom";
-import { ProtectedLayout } from "@/views/board/components/layout/ProtectedLayout";
+import { ProtectedLayout } from "@/views/dashboard/components/layout/ProtectedLayout";
 
 interface DashboardLayoutProps {}
 
