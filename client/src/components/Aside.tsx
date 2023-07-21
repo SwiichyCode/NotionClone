@@ -18,7 +18,7 @@ export const Aside = () => {
       {boards.map(({ id, name }) => (
         <div key={id}>
           <h3>{name}</h3>
-          <button onClick={() => deleteBoard(id)}>Delete</button>
+          <button onClick={() => deleteBoard(id || "")}>Delete</button>
         </div>
       ))}
 

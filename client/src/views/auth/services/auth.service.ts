@@ -41,12 +41,3 @@ const AuthService = {
 };
 
 export default AuthService;
-
-// const AuthService = {
-//   register,
-//   login,
-//   //   logout,
-//   //   getCurrentUser,
-// };
-
-// export default AuthService;

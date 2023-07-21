@@ -3,7 +3,7 @@ import { persist } from "zustand/middleware";
 import BoardService from "../views/dashboard/services/board.service";
 
 type Board = {
-  id?: string;
+  id?: string | undefined;
   name?: string;
   emoji?: string;
   owner?: string;
@@ -83,7 +83,7 @@ export const useBoardStore = create<BoardStore>()(
         }
       },
 
-      delete: async (id: any) => {
+      delete: async (id) => {
         set(() => ({ loading: true }));
 
         try {

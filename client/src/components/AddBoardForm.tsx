@@ -1,3 +1,4 @@
+import { Dispatch, SetStateAction } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { v4 as uuidv4 } from "uuid";
 
@@ -6,21 +7,21 @@ type Inputs = {
 };
 
 type NewBoard = {
-  _id?: string;
+  id: string;
   name: string;
+  owner: string;
 };
 
 interface AddBoardFormProps {
-  boards: NewBoard[];
-  setBoards: any;
-  addBoard: any;
+  boards?: NewBoard[];
+  setBoards?: SetStateAction<Dispatch<NewBoard[]>>;
+  addBoard: (board: NewBoard) => void | Promise<void>;
 }
 
 export const AddBoardForm = ({ addBoard }: AddBoardFormProps) => {
   const {
     register,
     handleSubmit,
-
     formState: { errors },
   } = useForm<Inputs>();
 
@@ -28,10 +29,12 @@ export const AddBoardForm = ({ addBoard }: AddBoardFormProps) => {
     const newId = uuidv4();
     const owner = localStorage.getItem("user");
 
+    if (owner === null) return;
+
     addBoard({
       id: newId,
       name: data.name,
-      owner: JSON.parse(owner as string).id,
+      owner: JSON.parse(owner).id,
     });
   };
 

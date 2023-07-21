@@ -24,7 +24,7 @@
     "zustand": "^4.3.4"
   },
   "devDependencies": {
-    "@types/node": "^18.14.2",
+    "@types/node": "^18.16.16",
     "@types/react": "^18.0.27",
     "@types/react-dom": "^18.0.10",
     "@types/styled-components": "^5.1.26",
