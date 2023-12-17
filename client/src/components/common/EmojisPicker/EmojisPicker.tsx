@@ -1,21 +1,21 @@
 import { useState, useCallback, useRef } from "react";
 import { useDebounce } from "react-use";
+import { useClickOutside } from "@/views/dashboard/hooks/useClickOutside";
 import { EmojisList } from "./EmojisList";
 import { EmojisSearchBar } from "./EmojisSearchBar";
 import { Spinner } from "../Spinner";
 import api from "@/api/api";
-import { useClickOutside } from "@/views/dashboard/hooks/useClickOutside";
 
-export interface EmojiState {
+export type EmojiState = {
   slug: string;
   character: string;
   group: string;
   subGroup: string;
   unicodeName: string;
   codePoint: string;
-}
+};
 
-interface EmojisPickerProps {
+type Props = {
   openEmojiPicker: boolean;
   setOpenEmojiPicker: (value: boolean) => void;
   emojiSelected: EmojiState;
@@ -25,7 +25,7 @@ interface EmojisPickerProps {
     y: number;
   };
   handleEditEmoji: any;
-}
+};
 
 export const EmojisPicker = ({
   openEmojiPicker,
@@ -33,7 +33,7 @@ export const EmojisPicker = ({
   emojiSelected,
   setEmojiSelected,
   position,
-}: EmojisPickerProps) => {
+}: Props) => {
   const [emojis, setEmojis] = useState<EmojiState[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [filteredEmojis, setFilteredEmojis] = useState<EmojiState[]>([]);

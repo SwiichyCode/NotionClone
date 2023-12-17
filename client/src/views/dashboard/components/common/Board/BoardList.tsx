@@ -1,9 +1,12 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 import { useBoardStore } from "@/store/board.store";
 import { EmojisPicker } from "@/components/common/EmojisPicker/EmojisPicker";
-import { EmojiState } from "@/components/common/EmojisPicker/EmojisPicker";
+import { BoardTitle } from "./BoardTitle";
+import { BoardEmoji } from "./BoardEmoji";
 import { BoardOptions } from "./BoardOptions";
+import { BoardLink } from "./BoardLink";
+import type { EmojiState } from "@/components/common/EmojisPicker/EmojisPicker";
+import { URL_CONSTANT } from "@/constants/url.constant";
 
 export const BoardList = () => {
   const [openEmojiPicker, setOpenEmojiPicker] = useState(false);
@@ -14,7 +17,8 @@ export const BoardList = () => {
   const updateBoard = useBoardStore((state) => state.update);
   const deleteBoard = useBoardStore((state) => state.delete);
   const fetchBoards = useBoardStore((state) => state.fetch);
-  const [clicked, setClicked] = useState(false);
+  const [openOptions, setOpenOptions] = useState(false);
+  const [openEditDocumentTitle, setOpenEditDocumentTitle] = useState(false);
   const [selectedValue, setSelectedValue] = useState({
     id: "",
     name: "",
@@ -51,12 +55,22 @@ export const BoardList = () => {
     await updateBoard(newBoard);
   };
 
+  const handleEditDocumentName = async () => {
+    const newBoard = {
+      id: selectedValue.id,
+      name: selectedValue.name,
+      emoji: emojiSelected.character,
+    };
+
+    await updateBoard(newBoard);
+  };
+
   useEffect(() => {
     handleEditEmoji();
   }, [emojiSelected]);
 
   useEffect(() => {
-    const handleClick = () => setClicked(false);
+    const handleClick = () => setOpenOptions(false);
     window.addEventListener("click", handleClick);
     return () => {
       window.removeEventListener("click", handleClick);
@@ -69,7 +83,7 @@ export const BoardList = () => {
         <li
           onContextMenu={(e) => {
             e.preventDefault();
-            setClicked(true);
+            setOpenOptions(true);
             setPosition({
               x: e.pageX,
               y: e.pageY,
@@ -78,27 +92,29 @@ export const BoardList = () => {
           key={board.id}
           className="pl-4 cursor-pointer text-xs py-2 hover:bg-gray-100 "
         >
-          {clicked && (
-            <BoardOptions
-              position={position}
-              deleteBoard={deleteBoard}
-              id={board.id}
+          <BoardOptions
+            id={board.id}
+            openOptions={openOptions}
+            position={position}
+            deleteBoard={deleteBoard}
+            setOpenDocumentTitle={setOpenEditDocumentTitle}
+          />
+
+          <BoardLink href={`${URL_CONSTANT.DASHBOARD}/${board.id}`}>
+            <BoardEmoji
+              handleOpen={handleOpen}
+              id={board.id as string}
+              emoji={board.emoji}
             />
-          )}
-          <Link
-            to={`/dashboard/${board.id}`}
-            className="flex items-center gap-2"
-          >
-            <div
-              onClick={(event) => {
-                handleOpen(event, board.id as string);
-              }}
-              className="flex items-center justify-center w-[22px] h-[22px] text-slate-500"
-            >
-              {board.emoji}
-            </div>
-            <span className=" font-light text-sm">{board.name}</span>
-          </Link>
+            <BoardTitle
+              id={board.id as string}
+              name={board.name}
+              openEditDocumentTitle={openEditDocumentTitle}
+              setSelectedValue={setSelectedValue}
+              setOpenEditDocumentTitle={setOpenEditDocumentTitle}
+              handleEditDocumentName={handleEditDocumentName}
+            />
+          </BoardLink>
         </li>
       ))}
 

@@ -1,7 +1,9 @@
+const dotenv = require("dotenv");
 const express = require("express");
 const cors = require("cors");
-
 const app = express();
+
+dotenv.config();
 
 // parse requests of content-type - application/json
 app.use(cors());
@@ -12,7 +14,7 @@ const Role = db.role;
 
 db.mongoose
   .connect(
-    `mongodb+srv://Swiichy:7y35FZBaJ49bnOG1@cluster0.zczmp5c.mongodb.net/?retryWrites=true&w=majority`,
+    `mongodb+srv://${process.env.MONGO_USERNAME}:${process.env.MONGO_PASSWORD}@cluster0.t1lyycu.mongodb.net/?retryWrites=true&w=majority`,
     {
       useNewUrlParser: true,
       useUnifiedTopology: true,

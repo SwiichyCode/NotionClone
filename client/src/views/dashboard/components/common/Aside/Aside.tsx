@@ -5,9 +5,7 @@ import { BoardList } from "../Board/BoardList";
 import { BoardTrash } from "../Board/BoardTrash";
 import { AsideLayout } from "../../layout/AsideLayout";
 
-interface AsideProps {}
-
-export const Aside = (props: AsideProps) => {
+export const Aside = () => {
   return (
     <AsideLayout>
       <AsideProfil />
